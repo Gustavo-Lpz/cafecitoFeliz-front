@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.modal-custom {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  width: 400px;
+}

@@ -1,0 +1,194 @@
+<div class="container py-5">
+
+  <!-- ================================================= -->
+  <!-- 🧾 TICKET FINAL -->
+  <!-- ================================================= -->
+  <div *ngIf="showTicket" class="row justify-content-center">
+
+    <div class="col-lg-6">
+      <div class="card shadow border-0 p-4 text-center checkout-card">
+
+        <h4 class="fw-bold mb-3">✅ ¡Compra realizada!</h4>
+
+        <p class="text-muted small">
+          {{ ticketDate | date:'medium' }}
+        </p>
+
+        <hr>
+
+        <div
+          *ngFor="let item of ticketItems"
+          class="d-flex justify-content-between mb-2 small"
+        >
+          <span>{{ item.product.name }} x {{ item.quantity }}</span>
+          <span>${{ item.subtotal }}</span>
+        </div>
+
+        <hr>
+
+        <h5 class="fw-bold text-success">
+          Total pagado: ${{ ticketTotal }}
+        </h5>
+
+        <button
+          class="btn btn-success mt-4 rounded-pill px-4"
+          (click)="closeTicket()"
+        >
+          Volver al inicio
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- 🛒 CHECKOUT NORMAL -->
+  <!-- ================================================= -->
+  <div *ngIf="!showTicket">
+
+    <h3 class="fw-bold mb-4">🧾 Confirmar compra</h3>
+
+    <div class="row g-4">
+
+      <!-- ============================= -->
+      <!-- PRODUCTOS -->
+      <!-- ============================= -->
+      <div class="col-lg-7">
+
+        <div class="card border-0 shadow-sm p-4 checkout-card">
+
+          <h5 class="fw-semibold mb-4">Productos</h5>
+
+          <div
+            *ngFor="let item of cartItems"
+            class="product-row d-flex justify-content-between align-items-center"
+          >
+            <div class="d-flex align-items-center gap-3">
+
+              <img
+                [src]="item.product.image || 'https://via.placeholder.com/80'"
+                class="checkout-img"
+              />
+
+              <div>
+                <div class="fw-semibold small-title">
+                  {{ item.product.name }}
+                </div>
+
+                <small class="text-muted">
+                  ${{ item.product.price }} x {{ item.quantity }}
+                </small>
+              </div>
+            </div>
+
+            <div class="fw-semibold">
+              ${{ item.subtotal }}
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="summary-line">
+            <span>Subtotal</span>
+            <span>${{ subtotal }}</span>
+          </div>
+
+          <div
+            *ngIf="discountPercent > 0"
+            class="summary-line text-success fw-semibold"
+          >
+            <span>Descuento ({{ discountPercent }}%)</span>
+            <span>- ${{ discountAmount }}</span>
+          </div>
+
+          <hr>
+
+          <div class="summary-total">
+            <span>Total a pagar</span>
+            <span>${{ totalConDescuento }}</span>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- PAGO -->
+      <!-- ============================= -->
+      <div class="col-lg-5">
+
+        <div class="card border-0 shadow checkout-card sticky-top p-4">
+
+          <h5 class="fw-semibold mb-4">Resumen de pago</h5>
+
+          <div class="text-center mb-4">
+            <div class="text-muted small">Total</div>
+            <div class="price-big">
+              ${{ totalConDescuento }}
+            </div>
+          </div>
+
+          <div class="d-flex flex-column gap-3 mb-4">
+
+            <label class="payment-option">
+              <input
+                type="radio"
+                name="payment"
+                value="efectivo"
+                [(ngModel)]="paymentMethod"
+                [disabled]="isProcessing"
+              />
+              💵 Efectivo
+            </label>
+
+            <label class="payment-option">
+              <input
+                type="radio"
+                name="payment"
+                value="tarjeta"
+                [(ngModel)]="paymentMethod"
+                [disabled]="isProcessing"
+              />
+              💳 Tarjeta
+            </label>
+
+          </div>
+
+          <button
+            class="btn btn-success w-100 py-3 rounded-pill fw-semibold pay-btn"
+            type="button"
+            (click)="pay()"
+            [disabled]="isProcessing || cartItems.length === 0"
+          >
+
+            <span *ngIf="!isProcessing">
+              ✅ Pagar ${{ totalConDescuento }}
+            </span>
+
+            <span *ngIf="isProcessing" class="spinner-border spinner-border-sm"></span>
+            <span *ngIf="isProcessing">Procesando...</span>
+
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<style> 
+.checkout-card { border-radius: 18px; } 
+.checkout-img { width: 65px; height: 65px; object-fit: cover; border-radius: 12px; } 
+.product-row { padding: 10px 0; border-bottom: 1px solid #f1f1f1; } 
+.product-row:last-child { border-bottom: none; } .small-title { font-size: 0.95rem; } 
+.summary-line { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95rem; } 
+.summary-total { display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: bold; } 
+.price-big { font-size: 2rem; font-weight: bold; color: #198754; } 
+.payment-option { border: 1px solid #dee2e6; padding: 12px 14px; border-radius: 12px; cursor: pointer; transition: 0.15s; } 
+.payment-option:hover { background: #f8f9fa; } 
+.pay-btn { font-size: 1.1rem; } 
+</style>

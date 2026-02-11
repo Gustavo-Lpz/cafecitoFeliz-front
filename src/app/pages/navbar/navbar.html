@@ -1,0 +1,144 @@
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-4 py-3 shadow-sm">
+
+  <!-- ========================= -->
+  <!-- LOGO -->
+  <!-- ========================= -->
+  <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-2" routerLink="/">
+    ☕ <span>Cafecito Feliz</span>
+  </a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+
+    <!-- ========================= -->
+    <!-- ADMIN BUTTONS -->
+    <!-- ========================= -->
+    <ng-container *ngIf="isAdmin">
+      <div class="d-flex gap-2 ms-3">
+        <a routerLink="/admin/add-product" class="btn btn-success btn-sm rounded-pill">
+          ➕ Agregar
+        </a>
+
+        <a routerLink="/admin/edit-products" class="btn btn-warning btn-sm rounded-pill">
+          ✏️ Editar
+        </a>
+
+        <a routerLink="/admin/admin-sales" class="btn btn-info btn-sm rounded-pill text-white">
+          📊 Ventas
+        </a>
+
+      </div>
+    </ng-container>
+
+    <!-- ========================= -->
+    <!-- SEARCH -->
+    <!-- ========================= -->
+    <form
+      class="d-flex mx-auto search-box"
+      (submit)="$event.preventDefault()"
+    >
+      <input
+        class="form-control rounded-pill px-4"
+        type="search"
+        placeholder="🔎 Buscar tu café..."
+        [(ngModel)]="searchTerm"
+        (input)="search()"
+        name="search"
+      />
+    </form>
+
+    <!-- ========================= -->
+    <!-- RIGHT SIDE -->
+    <!-- ========================= -->
+    <div class="d-flex align-items-center gap-3">
+
+      <!-- Carrito -->
+      <a
+        routerLink="/cart"
+        class="btn btn-outline-light rounded-pill position-relative px-3"
+      >
+        🛒
+        <span class="cart-badge">
+          {{ cartCount }}
+        </span>
+      </a>
+
+      <!-- Auth -->
+      <ng-container *ngIf="!user; else loggedIn">
+
+        <a routerLink="/login" class="btn btn-outline-light rounded-pill px-3">
+          Login
+        </a>
+
+        <a routerLink="/register" class="btn btn-warning rounded-pill px-3 fw-semibold">
+          Registro
+        </a>
+
+      </ng-container>
+
+      <ng-template #loggedIn>
+
+        <span class="text-light small d-none d-md-block">
+          👋 {{ user.displayName }}
+        </span>
+
+        <button
+          class="btn btn-danger btn-sm rounded-pill px-3"
+          (click)="logout()"
+        >
+          Salir
+        </button>
+
+      </ng-template>
+
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- ================================= -->
+<!-- 🔥 ESTILOS BONITOS -->
+<!-- ================================= -->
+
+<style>
+.custom-navbar {
+  background: linear-gradient(90deg, #1f1f1f, #2b2b2b);
+  backdrop-filter: blur(6px);
+}
+
+/* buscador */
+.search-box input {
+  min-width: 260px;
+  max-width: 350px;
+}
+
+/* badge carrito */
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #ff5252;
+  color: white;
+  font-size: 11px;
+  padding: 3px 7px;
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+/* animación hover botones */
+.navbar .btn {
+  transition: all .2s ease;
+}
+
+.navbar .btn:hover {
+  transform: translateY(-2px);
+}
+</style>

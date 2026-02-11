@@ -1,0 +1,190 @@
+<div class="container py-5">
+
+  <div class="row justify-content-center">
+
+    <div class="col-lg-9">
+
+      <div class="card shadow-lg border-0 add-card">
+
+        <!-- HEADER -->
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+          <h5 class="mb-0 fw-semibold">➕ Nuevo producto</h5>
+          <small class="text-light opacity-75">Panel administrador</small>
+        </div>
+
+
+        <!-- BODY -->
+        <div class="card-body p-4">
+
+          <div class="row g-4">
+
+            <!-- ======================= -->
+            <!-- 📝 FORM -->
+            <!-- ======================= -->
+            <div class="col-md-7">
+
+              <!-- Nombre -->
+              <label class="form-label fw-semibold">Nombre</label>
+              <input
+                class="form-control form-pro mb-3"
+                [(ngModel)]="product.name"
+                placeholder="Ej: Café Latte"
+              />
+
+              <!-- Precio -->
+              <label class="form-label fw-semibold">Precio</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <input
+                  type="number"
+                  class="form-control form-pro"
+                  [(ngModel)]="product.price"
+                  placeholder="0.00"
+                />
+              </div>
+
+              <!-- Imagen -->
+              <label class="form-label fw-semibold">Imagen (URL)</label>
+              <input
+                class="form-control form-pro mb-3"
+                [(ngModel)]="product.image"
+                placeholder="https://imagen.com/producto.jpg"
+              />
+
+              <!-- Descripción -->
+              <label class="form-label fw-semibold">Descripción</label>
+              <textarea
+                rows="4"
+                class="form-control form-pro"
+                [(ngModel)]="product.description"
+                placeholder="Describe el producto..."
+              ></textarea>
+
+            </div>
+
+
+            <!-- ======================= -->
+            <!-- 🖼️ PREVIEW -->
+            <!-- ======================= -->
+            <div class="col-md-5">
+
+              <div class="preview-card text-center p-3">
+
+                <div class="preview-img-wrapper mb-3">
+                  <img
+                    [src]="product.image || 'assets/no-image.png'"
+                    class="preview-img"
+                  />
+                </div>
+
+                <h6 class="fw-bold mb-1">
+                  {{ product.name || 'Nombre del producto' }}
+                </h6>
+
+                <div class="text-success fw-semibold mb-2">
+                  ${{ product.price || 0 }}
+                </div>
+
+                <small class="text-muted">
+                  {{ product.description || 'La descripción aparecerá aquí...' }}
+                </small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+
+          <button
+            class="btn btn-outline-secondary rounded-pill px-4"
+            routerLink="/admin/edit-products"
+          >
+            ← Cancelar
+          </button>
+
+          <button
+            class="btn btn-success rounded-pill px-4 fw-semibold shadow-sm"
+            (click)="create()"
+            [disabled]="!product.name || !product.price"
+          >
+            💾 Guardar producto
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================= -->
+  <!-- ✅ TOAST -->
+  <!-- ================================= -->
+  <div
+    class="toast-container position-fixed bottom-0 end-0 p-3"
+    *ngIf="showToast"
+  >
+    <div class="toast show text-bg-success border-0 shadow-lg rounded-4">
+
+      <div class="d-flex align-items-center">
+        <div class="toast-body fw-semibold">
+          ✅ Producto creado correctamente
+        </div>
+
+        <button
+          class="btn-close btn-close-white me-2"
+          (click)="showToast = false">
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- ================================= -->
+<!-- 🔥 ESTILOS PRO -->
+<!-- ================================= -->
+<style>
+.add-card {
+  border-radius: 20px;
+}
+
+.form-pro {
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.preview-card {
+  border: 1px solid #e9ecef;
+  border-radius: 16px;
+  background: #fafafa;
+  height: 100%;
+}
+
+.preview-img-wrapper {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-footer {
+  border-top: 1px solid #eee;
+}
+</style>

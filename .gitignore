@@ -1,0 +1,61 @@
+# =========================
+# Angular / Build output
+# =========================
+dist/
+.angular/
+tmp/
+out-tsc/
+bazel-out/
+
+# =========================
+# Node
+# =========================
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Environment files (NO subir secretos)
+# =========================
+.env
+.env.local
+.env.*.local
+
+# =========================
+# IDEs / Editors
+# =========================
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# =========================
+# Testing / coverage
+# =========================
+coverage/
+testem.log
+
+# =========================
+# Misc
+# =========================
+.sass-cache/
+connect.lock
+libpeerconnection.log
+typings/
+__screenshots__/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db

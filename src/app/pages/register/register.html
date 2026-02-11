@@ -1,0 +1,108 @@
+<div class="register-wrapper">
+
+  <div class="card register-card shadow-lg border-0">
+
+    <div class="card-body p-5">
+
+      <!-- HEADER -->
+      <div class="text-center mb-4">
+        <h3 class="fw-bold mb-1">📝 Crear cuenta</h3>
+        <small class="text-muted">Regístrate para comenzar a comprar y obtener recompensas ☕</small>
+      </div>
+
+      <!-- NOMBRE -->
+      <div class="form-floating mb-3">
+        <input
+          class="form-control rounded-3"
+          placeholder="Nombre"
+          [(ngModel)]="displayName"
+        />
+        <label>👤 Nombre</label>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          class="form-control rounded-3"
+          placeholder="Email"
+          [(ngModel)]="email"
+        />
+        <label>📧 Email</label>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          class="form-control rounded-3"
+          placeholder="Contraseña"
+          [(ngModel)]="password"
+        />
+        <label>🔒 Contraseña</label>
+      </div>
+
+      <!-- TELÉFONO -->
+      <div class="form-floating mb-4">
+        <input
+          class="form-control rounded-3"
+          placeholder="Teléfono"
+          [(ngModel)]="phone"
+        />
+        <label>📱 Teléfono</label>
+      </div>
+
+      <!-- BUTTON -->
+      <button
+        class="btn btn-success w-100 rounded-3 fw-semibold py-2 register-btn"
+        (click)="register()"
+      >
+        Crear cuenta
+      </button>
+
+      <!-- LINK LOGIN -->
+      <div class="text-center mt-3 small">
+        ¿Ya tienes cuenta?
+        <a routerLink="/login" class="fw-semibold text-decoration-none">
+          Inicia sesión
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ================= ESTILOS ================= -->
+<style>
+.register-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+.register-card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px;
+  transition: 0.25s ease;
+}
+
+.register-card:hover {
+  transform: translateY(-4px);
+}
+
+.register-btn {
+  transition: 0.2s ease;
+}
+
+.register-btn:hover {
+  transform: scale(1.02);
+}
+</style>

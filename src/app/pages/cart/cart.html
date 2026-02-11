@@ -1,0 +1,161 @@
+<div class="container py-5">
+
+  <h2 class="mb-4 fw-bold">🛒 Tu carrito</h2>
+
+  <!-- =============================== -->
+  <!-- VACÍO -->
+  <!-- =============================== -->
+  <div *ngIf="items.length === 0" class="text-center py-5">
+
+    <h5 class="text-muted mb-3">Tu carrito está vacío</h5>
+
+    <a routerLink="/" class="btn btn-dark rounded-pill px-4">
+      ☕ Ver menú
+    </a>
+
+  </div>
+
+
+  <!-- =============================== -->
+  <!-- CONTENIDO -->
+  <!-- =============================== -->
+  <div *ngIf="items.length > 0" class="row g-4">
+
+    <!-- 🔹 LISTA PRODUCTOS -->
+    <div class="col-lg-8">
+
+      <div
+        *ngFor="let item of items"
+        class="card mb-3 shadow-sm border-0 cart-card"
+      >
+        <div class="row g-0 align-items-center">
+
+          <!-- imagen -->
+          <div class="col-3 col-md-2">
+            <img
+              [src]="item.product.image || 'https://via.placeholder.com/150x150'"
+              class="img-fluid rounded-start cart-img"
+            />
+          </div>
+
+          <!-- info -->
+          <div class="col-9 col-md-10">
+            <div class="card-body d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+
+              <!-- nombre -->
+              <div>
+                <h6 class="mb-1 fw-semibold">{{ item.product.name }}</h6>
+                <small class="text-muted">
+                  ${{ item.product.price }} c/u
+                </small>
+              </div>
+
+              <!-- cantidad -->
+              <div class="d-flex align-items-center gap-2">
+
+                <button
+                  class="btn btn-outline-secondary btn-sm rounded-circle"
+                  (click)="update(item, item.quantity - 1)"
+                >
+                  −
+                </button>
+
+                <span class="fw-semibold px-2">
+                  {{ item.quantity }}
+                </span>
+
+                <button
+                  class="btn btn-outline-secondary btn-sm rounded-circle"
+                  (click)="update(item, item.quantity + 1)"
+                >
+                  +
+                </button>
+
+              </div>
+
+              <!-- subtotal -->
+              <div class="fw-bold fs-6">
+                ${{ item.subtotal }}
+              </div>
+
+              <!-- eliminar -->
+              <button
+                class="btn btn-outline-danger btn-sm rounded-circle"
+                (click)="remove(item.product._id!)"
+              >
+                ✕
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- 🔹 RESUMEN -->
+    <div class="col-lg-4">
+
+      <div class="card shadow border-0 p-4 summary-card sticky-top">
+
+        <h5 class="fw-bold mb-3">Resumen</h5>
+
+        <div class="d-flex justify-content-between mb-2">
+          <span>Productos</span>
+          <span>{{ items.length }}</span>
+        </div>
+
+        <div class="d-flex justify-content-between mb-2">
+          <span>Subtotal</span>
+          <span>${{ total }}</span>
+        </div>
+
+        <hr>
+
+        <div class="d-flex justify-content-between fs-5 fw-bold">
+          <span>Total</span>
+          <span>${{ total }}</span>
+        </div>
+
+        <a
+          routerLink="/checkout"
+          class="btn btn-success w-100 mt-3 rounded-pill py-2 fw-semibold"
+        >
+          ✅ Proceder al pago
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ================================= -->
+<!-- 🔥 ESTILOS BONITOS -->
+<!-- ================================= -->
+
+<style>
+.cart-card {
+  border-radius: 16px;
+  transition: all .2s ease;
+}
+
+.cart-card:hover {
+  transform: translateY(-2px);
+}
+
+.cart-img {
+  height: 90px;
+  object-fit: cover;
+}
+
+.summary-card {
+  border-radius: 16px;
+}
+</style>

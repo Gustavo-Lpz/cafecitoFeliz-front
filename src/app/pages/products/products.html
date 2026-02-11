@@ -1,0 +1,153 @@
+<div class="container mt-5">
+
+  <h2 class="text-center fw-bold mb-5">☕ Nuestro menú</h2>
+
+  <div class="row g-4">
+
+    <div
+      class="col-sm-6 col-md-4 col-lg-3"
+      *ngFor="let product of products"
+    >
+
+      <div class="card h-100 border-0 shadow-sm product-card">
+
+        <!-- ==================== -->
+        <!-- Imagen -->
+        <!-- ==================== -->
+        <div class="position-relative">
+
+          <img
+            [src]="product.image || 'https://via.placeholder.com/400x300'"
+            class="card-img-top product-img"
+          />
+
+          <!-- precio flotante -->
+          <span class="badge bg-dark price-badge">
+            ${{ product.price }}
+          </span>
+
+        </div>
+
+        <!-- ==================== -->
+        <!-- Body -->
+        <!-- ==================== -->
+        <div class="card-body d-flex flex-column">
+
+          <h5 class="fw-semibold mb-2">
+            {{ product.name }}
+          </h5>
+
+          <p class="text-muted small flex-grow-1">
+            {{ product.description || 'Delicioso café recién preparado ☕' }}
+          </p>
+
+          <!-- stock -->
+          <span
+            class="badge mt-2 align-self-start"
+            [ngClass]="{
+              'bg-danger': product.stock === 0,
+              'bg-warning text-dark': product.stock > 0 && product.stock < 5,
+              'bg-success': product.stock >= 5
+            }"
+          >
+            Stock: {{ product.stock }}
+          </span>
+
+        </div>
+
+        <!-- ==================== -->
+        <!-- Footer -->
+        <!-- ==================== -->
+        <div class="card-footer bg-white border-0 p-3">
+
+          <button
+            class="btn btn-primary w-100 fw-semibold"
+            (click)="addToCart(product)"
+            [disabled]="product.stock === 0"
+          >
+            {{ product.stock === 0 ? 'Sin stock' : 'Agregar al carrito' }}
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+    
+
+  </div>
+
+  <!-- estado vacío -->
+  <div *ngIf="products.length === 0" class="alert alert-info text-center mt-5">
+    No hay productos disponibles
+  </div>
+
+</div>
+
+<!-- ================================= -->
+<!-- 🛒 BOTÓN FLOTANTE CARRITO -->
+<!-- ================================= -->
+
+<button
+  *ngIf="cartCount > 0"
+  class="btn btn-dark position-fixed bottom-0 end-0 m-4 rounded-pill shadow-lg"
+  routerLink="/cart"
+>
+  🛒 Ver carrito ({{ cartCount }})
+</button>
+
+
+
+
+<!-- ================================= -->
+<!-- 🔥 estilos visuales suaves -->
+<!-- ================================= -->
+
+<style>
+.product-card {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all .25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.15);
+}
+
+.product-img {
+  height: 220px;
+  object-fit: cover;
+}
+
+.price-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.cart-float-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+
+  background: #198754;
+  color: white;
+  border: none;
+
+  padding: 14px 22px;
+  border-radius: 50px;
+
+  font-weight: 600;
+  font-size: 14px;
+
+  z-index: 999;
+  transition: all .2s ease;
+}
+
+.cart-float-btn:hover {
+  transform: scale(1.06);
+}
+</style>

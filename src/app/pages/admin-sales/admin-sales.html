@@ -1,0 +1,112 @@
+<div class="container mt-5">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold m-0">📊 Ventas del día</h2>
+
+    <button
+      class="btn btn-outline-dark rounded-pill"
+      (click)="refresh()"
+    >
+      🔄 Actualizar
+    </button>
+  </div>
+
+  <!-- resumen -->
+  <div class="row g-4 mb-5">
+
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 text-center p-4">
+        <h6 class="text-muted">Total vendido hoy</h6>
+        <h3 class="fw-bold text-success m-0">
+          ${{ totalAmount }}
+        </h3>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 text-center p-4">
+        <h6 class="text-muted">Ventas realizadas</h6>
+        <h3 class="fw-bold m-0">
+          {{ totalSales }}
+        </h3>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- tabla -->
+  <div class="card shadow-sm border-0">
+
+    <div class="table-responsive">
+
+      <table class="table table-hover align-middle mb-0">
+
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Pago</th>
+            <th>Productos</th>
+            <th>Total</th>
+            <th>Hora</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let sale of sales; let i = index">
+
+            <td>{{ i + 1 }}</td>
+
+            <td>
+              {{
+                sale.user?.displayName ||
+                sale.guestInfo?.name ||
+                'Mostrador'
+              }}
+            </td>
+
+            <td>
+              <span class="badge bg-secondary text-uppercase">
+                {{ sale.paymentMethod }}
+              </span>
+            </td>
+
+            <td>{{ sale.items.length }}</td>
+
+            <td class="fw-bold text-success">
+              ${{ sale.total }}
+            </td>
+
+            <td class="text-muted small">
+              {{ sale.createdAt | date:'shortTime' }}
+            </td>
+
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'bg-success': sale.status === 'paid',
+                  'bg-warning text-dark': sale.status === 'pending',
+                  'bg-danger': sale.status === 'cancelled'
+                }"
+              >
+                {{ sale.status }}
+              </span>
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+
+  <div *ngIf="sales.length === 0" class="alert alert-info text-center mt-4">
+    No hay ventas registradas hoy ☕
+  </div>
+
+</div>

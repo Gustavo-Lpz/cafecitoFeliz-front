@@ -1,0 +1,86 @@
+<div class="login-wrapper">
+
+  <div class="card login-card shadow-lg border-0">
+
+    <!-- HEADER -->
+    <div class="card-body p-5">
+
+      <div class="text-center mb-4">
+        <h3 class="fw-bold mb-1">🔐 Bienvenido</h3>
+        <small class="text-muted">Inicia sesión para continuar</small>
+      </div>
+
+      <!-- ERROR -->
+      <div *ngIf="error" class="alert alert-danger text-center py-2">
+        {{ error }}
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          class="form-control rounded-3"
+          placeholder="Email"
+          [(ngModel)]="email"
+        />
+        <label>📧 Email</label>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="form-floating mb-4">
+        <input
+          type="password"
+          class="form-control rounded-3"
+          placeholder="Contraseña"
+          [(ngModel)]="password"
+        />
+        <label>🔒 Contraseña</label>
+      </div>
+
+      <!-- BUTTON -->
+      <button
+        class="btn btn-dark w-100 rounded-3 fw-semibold py-2 login-btn"
+        (click)="login()"
+      >
+        Ingresar
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ================= ESTILOS ================= -->
+<style>
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* fondo suave */
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+  transition: 0.25s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-4px);
+}
+
+.login-btn {
+  transition: 0.2s ease;
+}
+
+.login-btn:hover {
+  transform: scale(1.02);
+}
+</style>
