@@ -89,7 +89,7 @@ export class Checkout implements OnInit, OnDestroy {
   // =================================================
   // 🔥 PAY (ULTRA ESTABLE)
   // =================================================
- pay() {
+pay() {
 
   console.log('🔥 CLICK PAY');
 
@@ -107,7 +107,8 @@ export class Checkout implements OnInit, OnDestroy {
     paymentMethod: this.paymentMethod
   };
 
-  const isLogged = !!this.authService.getCurrentUser();
+  // ✅ ahora valida por token real
+  const isLogged = this.authService.isLoggedIn();
 
   const request$ = isLogged
     ? this.saleService.createSale(saleData)
@@ -121,27 +122,25 @@ export class Checkout implements OnInit, OnDestroy {
 
   request$.subscribe({
 
-   next: (res: any) => {
+    next: (res: any) => {
 
-  console.log('✅ Venta OK', res);
+      console.log('✅ Venta OK', res);
 
-  this.ticketItems = [...this.cartItems];
-  this.ticketTotal = res.sale.total;
-  this.ticketDate = new Date();
+      this.ticketItems = [...this.cartItems];
+      this.ticketTotal = res.sale.total;
+      this.ticketDate = new Date();
 
-  // 🔥 LIMPIAR AQUÍ (no al cerrar)
-  this.cartService.clearCart();
-  this.cartItems = [];
+      this.cartService.clearCart();
+      this.cartItems = [];
 
-  this.isProcessing = false;
-  this.showTicket = true;
-  this.showToast = true;
+      this.isProcessing = false;
+      this.showTicket = true;
+      this.showToast = true;
 
-  this.cdr.detectChanges();
+      this.cdr.detectChanges();
 
-  setTimeout(() => this.showToast = false, 2500);
-},
-
+      setTimeout(() => this.showToast = false, 2500);
+    },
 
     error: (err) => {
       console.error(err);
@@ -150,6 +149,7 @@ export class Checkout implements OnInit, OnDestroy {
     }
   });
 }
+
 
   // =================================================
   // CERRAR TICKET

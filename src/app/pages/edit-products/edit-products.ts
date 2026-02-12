@@ -22,11 +22,9 @@ export class EditProducts implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
 
-  // 🔍 búsqueda reactiva
   private searchTerm$ = new BehaviorSubject<string>('');
   searchTerm = '';
 
-  // modal
   selectedProduct: Product | null = null;
 
   showToast = false;
@@ -37,9 +35,6 @@ export class EditProducts implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  // =========================
-  // INIT
-  // =========================
   ngOnInit(): void {
 
     combineLatest([
@@ -55,35 +50,39 @@ export class EditProducts implements OnInit {
         p.name.toLowerCase().includes(value)
       );
 
-      // 🔥 fuerza refresco inmediato
       this.cdr.detectChanges();
     });
   }
 
-  // =========================
-  // búsqueda
-  // =========================
   set search(value: string) {
     this.searchTerm$.next(value);
   }
 
-  // =========================
-  // trackBy
-  // =========================
   trackById(index: number, product: Product) {
     return product._id;
   }
 
-  // =========================
-  // EDITAR
-  // =========================
   edit(product: Product) {
     this.selectedProduct = { ...product };
   }
 
-  // =========================
-  // STOCK
-  // =========================
+  // 🔥 NUEVO — GUARDAR CAMBIOS
+save() {
+  if (!this.selectedProduct) return;
+
+  this.productService.updateProduct(
+    this.selectedProduct._id!,
+    this.selectedProduct
+  ).subscribe(() => {
+
+    this.toast('Producto actualizado ✨');
+
+    this.selectedProduct = null;
+
+    this.searchTerm$.next(this.searchTerm);
+  });
+}
+
   addStock(product: Product, amount: number) {
     this.productService.addStock(product._id!, amount)
       .subscribe(updated => {
@@ -92,22 +91,16 @@ export class EditProducts implements OnInit {
       });
   }
 
-  // =========================
-  // DELETE
-  // =========================
   delete(id: string) {
 
     if (!confirm('¿Eliminar producto?')) return;
 
     this.productService.deleteProduct(id).subscribe(() => {
       this.toast('Producto eliminado 🗑');
-      this.searchTerm$.next(this.searchTerm); // 🔥 refresca lista
+      this.searchTerm$.next(this.searchTerm);
     });
   }
 
-  // =========================
-  // TOAST
-  // =========================
   private toast(message: string) {
     this.toastMessage = message;
     this.showToast = true;
