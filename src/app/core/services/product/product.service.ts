@@ -11,7 +11,10 @@ export class ProductService {
 
   private apiUrl = `${environment.apiUrl}/products`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+        console.log('🌍 API URL usada:', this.apiUrl);
+        console.log('🏷️ Production mode:', environment.production);
+  }
 
   // =========================
   // 📥 GET ALL (público)
