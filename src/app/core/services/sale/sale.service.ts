@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SaleService {
 
-  private api = 'http://localhost:3001/api/sales';
+  private api = `${environment.apiUrl}/sales`;
 
   constructor(
     private http: HttpClient,

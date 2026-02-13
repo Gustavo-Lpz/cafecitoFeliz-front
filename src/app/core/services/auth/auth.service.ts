@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, tap } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 export interface AuthUser {
   _id: string;
@@ -15,7 +16,7 @@ export interface AuthUser {
 })
 export class AuthService {
 
-  private API = 'http://localhost:3001/api/auth';
+  private API = `${environment.apiUrl}/auth`;
 
   // 👤 estado reactivo del usuario
   private userSubject = new BehaviorSubject<AuthUser | null>(null);
